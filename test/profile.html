@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: inline-block;
+            background-size: cover;
+            background-position: center;
+        }
+        .info {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .social-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .social-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-pic" id="profilePic"></div>
+        <div class="info">
+            <strong>Name:</strong> <span id="profileName"></span>
+        </div>
+        <div class="info">
+            <strong>Email:</strong> <span id="profileEmail"></span>
+        </div>
+        <div class="info">
+            <strong>Password:</strong> <span id="profilePassword"></span>
+        </div>
+        <button class="social-button" onclick="window.location.href='social.html'">My Social Media</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const name = localStorage.getItem('name');
+            const email = localStorage.getItem('email');
+            const password = localStorage.getItem('password');
+            const profilePic = localStorage.getItem('profilePic');
+
+            document.getElementById('profileName').textContent = name;
+            document.getElementById('profileEmail').textContent = email;
+            document.getElementById('profilePassword').textContent = password;
+            if (profilePic) {
+                document.getElementById('profilePic').style.backgroundImage = `url(${profilePic})`;
+            }
+        });
+    </script>
+</body>
+</html>

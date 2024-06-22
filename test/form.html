@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+        }
+        .submit-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enter Your Information</h1>
+        <input type="text" id="name" placeholder="Name">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <input type="file" id="profilePic" accept="image/*">
+        <div class="error" id="passwordError"></div>
+        <button class="submit-button" onclick="saveInformation()">Submit</button>
+    </div>
+
+    <script>
+        function saveInformation() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const profilePic = document.getElementById('profilePic').files[0];
+
+            if (!name || !email || !password || !profilePic) {
+                alert('Please fill out all fields and upload a profile picture.');
+                return;
+            }
+
+            if (!validatePassword(password)) {
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const profilePicDataUrl = event.target.result;
+                localStorage.setItem('name', name);
+                localStorage.setItem('email', email);
+                localStorage.setItem('password', password);
+                localStorage.setItem('profilePic', profilePicDataUrl);
+                window.location.href = 'profile.html';
+            };
+            reader.readAsDataURL(profilePic);
+        }
+
+        function validatePassword(password) {
+            const passwordError = document.getElementById('passwordError');
+            const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[a-zA-Z\d@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            
+            if (!regex.test(password)) {
+                passwordError.textContent = 'Password must be at least 8 characters long and include at least one uppercase letter, one number, and can include special characters @$!%*?&.';
+                return false;
+            }
+
+            passwordError.textContent = '';
+            return true;
+        }
+    </script>
+</body>
+</html>
